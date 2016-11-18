@@ -1,3 +1,6 @@
+# Global Hooks
+require 'redmine_open311/hooks/view_layouts_base_html_head_hook'
+
 # Configure View Overrides
 Rails.application.paths["app/overrides"] ||= []
 Dir.glob("#{Rails.root}/plugins/*/app/overrides").each do |dir|
