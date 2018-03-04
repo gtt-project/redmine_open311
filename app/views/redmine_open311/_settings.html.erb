@@ -1,2 +1,40 @@
+  <h3>Service discovery settings</h3>
+  <p>
+    <%= content_tag(:label, l(:label_open311_settings_contact)) %>
+    <%= text_area_tag('settings[contact]',
+        @settings['contact'],
+        :rows => 4) %>
+  </p>
+
+  <p>
+    <%= content_tag(:label, l(:label_open311_settings_key_service)) %>
+    <%= text_area_tag('settings[key_service]',
+        @settings['key_service'],
+        :rows => 4) %>
+  </p>
+
+  <p>
+    <%= content_tag(:label, l(:label_open311_settings_landing_page_content)) %>
+    <%= text_area_tag('settings[landing_page_content]',
+        @settings['landing_page_content'],
+        id: 'settings_landing_page_content', rows: 10) %>
+  </p>
+  <%= wikitoolbar_for 'settings_landing_page_content' %>
+</div>
+
+<div class="box tabular settings">
+  <h3>Trackers (service request types)</h3>
+
+  <p>
+    <% Tracker.sorted.all.each do |tracker| %>
+      <label for="<%= id = "settings_tracker_ids_#{tracker.id}" %>">
+        <%= tracker.name %>
+        <%= check_box_tag "settings[tracker_ids][]", tracker.id,
+              (@settings['tracker_ids'] || []).include?(tracker.id.to_s),
+              id: id %>
+      </label>
+      <br />
+    <% end %>
+  </p>
 
 

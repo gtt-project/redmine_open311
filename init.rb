@@ -14,10 +14,16 @@ Redmine::Plugin.register :redmine_open311 do
   requires_redmine version_or_higher: '3.4.0'
 
   settings default: {
+    'contact' => '',
+    'key_service' => '',
+    'landing_page_content' => '',
+    'tracker_ids' => []
   }, partial: 'redmine_open311/settings'
 
   project_module :open311 do
-    permission :access_open311_api, {}
+    permission :access_open311_api, {
+      open311_v2: %i(discovery services)
+    }
   end
 
 end
