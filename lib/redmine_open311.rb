@@ -12,7 +12,7 @@ module RedmineOpen311
   end
 
   def self.enabled_projects
-    Project.active.
+    Project.active.visible.
       joins(:enabled_modules).
       references(:enabled_modules).
       where(enabled_modules: { name: 'open311'})
