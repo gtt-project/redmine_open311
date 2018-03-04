@@ -5,10 +5,10 @@ Rails.configuration.to_prepare do
 end
 
 Redmine::Plugin.register :redmine_open311 do
-  name 'Redmine Open311 Plugin'
+  name 'Redmine GeoReport Plugin'
   author 'Jens Krämer, Georepublic'
   author_url 'https://hub.georepublic.net/gtt/redmine_open311'
-  description 'Adds open311 API endpoints to Redmine'
+  description 'Adds Open311 API endpoints to Redmine'
   version '0.1.0'
 
   requires_redmine version_or_higher: '3.4.0'
