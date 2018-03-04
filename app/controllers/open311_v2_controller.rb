@@ -8,7 +8,7 @@ class Open311V2Controller < ApplicationController
       @projects = [@project]
       @last_change = @project.updated_on
     else
-      @projects = RedmineOpen311.enabled_projects
+      @projects = RedmineOpen311::ProjectsQuery.new(params[:contains]).scope
       @last_change = @projects.maximum(:updated_on)
     end
     respond_to do |format|
