@@ -1,0 +1,23 @@
+api.discovery do
+  api.changeset @last_change
+  api.contact RedmineOpen311.settings['contact']
+  api.key_service RedmineOpen311.settings['key_service']
+
+  api.array :endpoints do
+    @projects.each do |project|
+      api.endpoint do
+        api.changeset project.updated_on
+        api.array :formats do
+          api.format 'text/xml'
+          api.format 'application/json'
+          api.format 'text/html'
+        end
+        api.specification 'http://wiki.open311.org/GeoReport_v2'
+        api.type RedmineOpen311.project_settings(project)['type']
+        api.url project_open311_root_url(project)
+        api.identifier project.identifier
+      end
+    end
+  end
+
+end

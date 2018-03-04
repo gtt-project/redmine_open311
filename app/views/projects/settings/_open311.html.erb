@@ -1,0 +1,17 @@
+<%= form_tag(open311_settings_path(@project), method: :put) do %>
+
+  <div class="box tabular">
+    <p>
+      <label for="settings_type"><%= l :label_open311_settings_type %></label>
+      <%= select_tag 'settings[type]', options_from_collection_for_select(['test', 'production'], :to_s, :to_s, RedmineOpen311.project_settings(@project)['type']) %>
+    </p>
+  </div>
+
+<p class="buttons">
+  <%= submit_tag l(:button_apply) %>
+</p>
+<% end %>
+
+
+
+

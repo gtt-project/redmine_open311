@@ -1,0 +1,19 @@
+<% if @body.present? %>
+  <div class="wiki description">
+    <%= textilizable @body %>
+  </div>
+<% else %>
+  <h1>List of GeoReport / Open311 endpoints</h1>
+<% end %>
+
+<ul>
+<% @projects.each do |project| %>
+  <li>
+    <strong><%= project.name %></strong> (<%= RedmineOpen311.project_settings(project)['type'] %>)<br />
+    <%= link_to project_open311_root_url(project), project_open311_root_url(project) %><br />
+    <% if project.short_description.present? %>
+      <div class="wiki description"><%= textilizable project.short_description %></div>
+    <% end %>
+  </li>
+<% end %>
+</ul>

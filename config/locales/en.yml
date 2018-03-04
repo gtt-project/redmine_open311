@@ -1,0 +1,10 @@
+---
+en:
+  label_open311: GeoReport
+  label_open311_settings_contact: Contact
+  label_open311_settings_key_service: Key service
+  label_open311_settings_landing_page_content: Landing page
+  label_open311_settings_type: Type
+
+  permission_access_open311_api: Access the GeoReport API
+  project_module_open311: GeoReport

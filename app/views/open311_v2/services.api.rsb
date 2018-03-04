@@ -1,0 +1,13 @@
+api.array :services do
+  @trackers.each do |tracker|
+    api.service do
+      api.service_code tracker.id
+      api.service_name tracker.name
+      api.description ''
+      api.keywords ''
+      api.group ''
+      api.metadata 'false'
+      api.type 'realtime'
+    end
+  end
+end
