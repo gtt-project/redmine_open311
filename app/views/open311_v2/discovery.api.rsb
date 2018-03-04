@@ -13,7 +13,7 @@ api.discovery do
           api.format 'text/html'
         end
         api.specification 'http://wiki.open311.org/GeoReport_v2'
-        api.type 'production'
+        api.type RedmineOpen311.project_settings(project)['type']
         api.url project_open311_root_url(project)
       end
     end

@@ -7,6 +7,10 @@ module RedmineOpen311
     Setting.plugin_redmine_open311
   end
 
+  def self.project_settings(project)
+    (settings['projects'] || {})[project.identifier] || {}
+  end
+
   def self.enabled_projects
     Project.active.
       joins(:enabled_modules).
