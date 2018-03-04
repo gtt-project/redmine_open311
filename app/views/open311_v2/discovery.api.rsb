@@ -15,6 +15,7 @@ api.discovery do
         api.specification 'http://wiki.open311.org/GeoReport_v2'
         api.type RedmineOpen311.project_settings(project)['type']
         api.url project_open311_root_url(project)
+        api.identifier project.identifier
       end
     end
   end
