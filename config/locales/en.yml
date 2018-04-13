@@ -1,9 +1,21 @@
 ---
 en:
   label_open311: GeoReport
+  label_open311_address_field: Address
+  label_open311_address_id_field: Address ID
+  label_open311_email_field: Email
+  label_open311_device_id_field: Device ID
+  label_open311_media_url_field: Media URL
+  label_open311_firstname_field: Firstname
+  label_open311_lastname_field: Lastname
+  label_open311_account_id_field: Account ID
+
+  label_open311_settings: Service Discovery Settings
   label_open311_settings_contact: Contact
+  label_open311_settings_customfields: Service Request Custom Fields
   label_open311_settings_key_service: Key service
   label_open311_settings_landing_page_content: Landing page
+  label_open311_settings_trackers: Trackers (Service Request Types)
   label_open311_settings_type: Type
 
   permission_access_open311_api: Access the GeoReport API

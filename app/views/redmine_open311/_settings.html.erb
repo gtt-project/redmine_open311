@@ -1,20 +1,26 @@
-  <h3>Service discovery settings</h3>
+  <h3><%= l :label_open311_settings %></h3>
   <p>
-    <%= content_tag(:label, l(:label_open311_settings_contact)) %>
+    <label for="settings_contact">
+      <%= l :label_open311_settings_contact %>
+    </label>
     <%= text_area_tag('settings[contact]',
         @settings['contact'],
         :rows => 4) %>
   </p>
 
   <p>
-    <%= content_tag(:label, l(:label_open311_settings_key_service)) %>
+    <label for="settings_key_service">
+      <%= l :label_open311_settings_key_service %>
+    </label>
     <%= text_area_tag('settings[key_service]',
         @settings['key_service'],
         :rows => 4) %>
   </p>
 
   <p>
-    <%= content_tag(:label, l(:label_open311_settings_landing_page_content)) %>
+    <label for="settings_landing_page_content">
+      <%= l :label_open311_settings_landing_page_content %>
+    </label>
     <%= text_area_tag('settings[landing_page_content]',
         @settings['landing_page_content'],
         id: 'settings_landing_page_content', rows: 10) %>
@@ -23,7 +29,7 @@
 </div>
 
 <div class="box tabular settings">
-  <h3>Trackers (service request types)</h3>
+  <h3><%= l :label_open311_settings_trackers %></h3>
 
   <p>
     <% Tracker.sorted.all.each do |tracker| %>
@@ -36,5 +42,17 @@
       <br />
     <% end %>
   </p>
+
+</div>
+
+<div class="box tabular settings">
+  <h3><%= l :label_open311_settings_customfields %></h3>
+  <% RedmineOpen311::CUSTOM_FIELD_KEYS.each do |f| %>
+    <p>
+      <label for="settings_<%= f %>"><%= l :"label_open311_#{f}" %></label>
+      <%= select_tag "settings[#{f}]",
+        options_from_collection_for_select([['', '']] + RedmineOpen311.custom_fields_for_select(f).map{|f| [f.id, f.name]}, :first, :last, RedmineOpen311.settings[f]) %>
+    </p>
+  <% end %>
 
 

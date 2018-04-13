@@ -22,7 +22,8 @@ Redmine::Plugin.register :redmine_open311 do
 
   project_module :open311 do
     permission :access_open311_api, {
-      open311_v2: %i(discovery services)
+      open311_v2: %i(discovery services),
+      open311_v2_requests: %i( create index show )
     }
   end
 
