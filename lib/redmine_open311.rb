@@ -3,7 +3,8 @@
 module RedmineOpen311
   def self.setup
     ProjectsController.send :helper, RedmineOpen311::ProjectSettingsTabs
-    Patches::ProjectPatch.apply
+    RedmineOpen311::Patches::ProjectPatch.apply
+    RedmineOpen311::Patches::JsonBuilderPatch.apply
   end
 
   def self.settings
@@ -34,6 +35,13 @@ module RedmineOpen311
     end
   end
 
+  def self.format_datetime(t)
+    t.utc.strftime '%Y-%m-%dT%H:%M:%SZ'
+  end
+
+  def self.parse_datetime(s)
+    DateTime.strptime(s, "%Y-%m-%dT%H:%M:%S%Z").in_time_zone
+  end
 
   CUSTOM_FIELDS = %w(
     address_string
@@ -45,6 +53,7 @@ module RedmineOpen311
     last_name
     phone
     device_id
+    zipcode
   )
   CUSTOM_FIELD_KEYS = CUSTOM_FIELDS.map{|f| "#{f}_field".freeze}
 

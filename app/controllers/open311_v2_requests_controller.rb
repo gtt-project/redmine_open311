@@ -7,13 +7,17 @@ class Open311V2RequestsController < ApplicationController
 
   def index
     @requests = RedmineOpen311::ServiceRequestQuery.new(
-      @project
-    ).scope
+      @project, params
+    ).scope.to_a.map{|i| RedmineOpen311::ServiceRequestDecorator.new(i)}
+  rescue ArgumentError
+    open311_error message: $!, status: 422
   end
 
 
   def show
-    @request = @project.issues.visible.find params[:id]
+    params[:service_request_id] = params[:id]
+    index
+    render 'index'
   end
 
 
@@ -21,7 +25,7 @@ class Open311V2RequestsController < ApplicationController
     r = RedmineOpen311::CreateServiceRequest.(params, project: @project)
 
     if r.request_created?
-      @request = r.request
+      @request = RedmineOpen311::ServiceRequestDecorator.new(r.request.issue)
       render 'create', status: :created
     else
       if req = r.request and req.invalid?

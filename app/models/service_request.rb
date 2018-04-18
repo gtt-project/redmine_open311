@@ -9,7 +9,7 @@ class ServiceRequest
     lat lon
     description
     attribute
-  ) + RedmineOpen311::CUSTOM_FIELDS.map(&:to_sym)
+  ) + RedmineOpen311::CUSTOM_FIELDS.map(&:to_sym) - [:zipcode] # zipcode should be determined internally from address I think, not part of the POST definition
 
   attr_accessor :project, :issue
   attr_reader(*ATTRIBUTES)
@@ -68,18 +68,7 @@ class ServiceRequest
     @subject ||= TextHelper.new.truncate(description, length: 255)
   end
 
-  # used for rendering the creation response
+  # used for rendering the creation / list response
 
-  def id
-    @issue&.id
-  end
-
-  def account_id
-    @account_id || @issue&.author_id
-  end
-
-  def service_notice
-    @issue&.status&.name
-  end
 
 end

@@ -1,5 +1,5 @@
 api.array :service_requests do
-  api.method_missing(:request) do # api.request is actually defined...
+  api.request do
     api.service_request_id @request.id
     api.service_notice @request.service_notice
     api.account_id @request.account_id

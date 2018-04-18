@@ -21,6 +21,14 @@ class RedmineOpen311Test < ActiveSupport::TestCase
     end
   end
 
+  test 'should format and parse timestamps' do
+    now = Time.now
+    assert str = RedmineOpen311.format_datetime(now)
+    assert ts = RedmineOpen311.parse_datetime(str)
+    assert_equal str, RedmineOpen311.format_datetime(ts)
+    assert_equal now.to_i, ts.to_i
+  end
+
   test 'should have default issue priority' do
     assert_equal 5, RedmineOpen311.new_request_priority.id
   end
