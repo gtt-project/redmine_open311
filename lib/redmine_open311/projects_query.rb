@@ -5,18 +5,9 @@ module RedmineOpen311
     end
 
     def scope
-      projects = RedmineOpen311.enabled_projects
-      if @contains
-        projects = projects.where(
-          Project.send(:sanitize_sql_array, [
-            "#{Project.table_name}.geom is not null and " +
-            "ST_Intersects(#{Project.table_name}.geom," +
-            "              ST_GeomFromText('%s', 4326))",
-            @contains
-          ])
-        )
-      end
-      projects
+      RedmineGtt::SpatialProjectsQuery.new(
+        contains: @contains, projects: RedmineOpen311.enabled_projects
+      ).scope
     end
 
   end

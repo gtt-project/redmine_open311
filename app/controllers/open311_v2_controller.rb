@@ -20,7 +20,11 @@ class Open311V2Controller < ApplicationController
   end
 
   def services
-    @trackers = RedmineOpen311.enabled_trackers
+    @trackers = if @project
+      @project.open311_trackers
+    else
+      RedmineOpen311.enabled_trackers
+    end
   end
 
   private

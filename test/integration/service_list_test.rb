@@ -1,7 +1,7 @@
 require_relative '../test_helper'
 
 class ServiceListTest < Redmine::IntegrationTest
-  fixtures :users, :email_addresses, :roles, :projects, :members, :member_roles, :trackers
+  fixtures :users, :email_addresses, :roles, :projects, :members, :member_roles, :trackers, :projects_trackers
 
   def setup
     super

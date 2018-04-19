@@ -1,0 +1,10 @@
+---
+ja:
+  label_open311: GeoReport
+  label_open311_settings_contact: お問い合わせ
+  label_open311_settings_key_service: Key service
+  label_open311_settings_landing_page_content: ランディングページ
+  label_open311_settings_type: Type
+
+  permission_access_open311_api: GeoReport APIにアクセスする
+  project_module_open311: GeoReport

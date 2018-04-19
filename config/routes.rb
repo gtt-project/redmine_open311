@@ -17,5 +17,7 @@ scope 'projects/:project_id' do
     root to: 'open311_v2#discovery', as: :project_open311_root
     get 'discovery', to: 'open311_v2#discovery', as: :project_open311_discovery
     get 'services', to: 'open311_v2#services', as: :project_open311_services
+
+    resources :requests, only: %i(index create show), controller: :open311_v2_requests
   end
 end

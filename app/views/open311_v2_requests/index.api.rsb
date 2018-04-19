@@ -1,0 +1,23 @@
+api.array(:service_requests) do
+  @requests.each do |request|
+    api.request do
+      api.service_request_id request.id if request.id
+      api.service_code request.service_code
+      api.service_name request.service_name
+      api.status request.status
+      api.description request.description
+      api.requested_datetime request.requested_datetime
+      api.updated_datetime request.updated_datetime
+      api.expected_datetime request.expected_datetime if request.expected_datetime
+
+      api.status_notes request.status_notes if request.status_notes
+      api.agency_responsible request.agency_responsible if request.agency_responsible
+      api.address request.address if request.address
+      api.address_id request.address_id if request.address_id
+      api.zipcode request.zipcode if request.zipcode
+      api.lat request.lat if request.lat
+      api.long request.long if request.long
+      api.media_url request.media_url if request.media_url
+    end
+  end
+end

@@ -1,0 +1,6 @@
+api.array :errors do
+  api.error do
+    api.code @code
+    api.description @description
+  end
+end
