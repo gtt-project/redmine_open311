@@ -9,6 +9,12 @@ ja:
   label_open311_lastname_field: 姓氏
   label_open311_account_id_field: アカウントID
 
+  label_open311_zipcode_field: 郵便番号
+  label_open311_phone_field: 電話番号
+  label_open311_last_name_field: 姓氏
+  label_open311_first_name_field: 名前
+  label_open311_address_string_field: 住所
+
   label_open311_settings: サービス発見の設定
   label_open311_settings_contact: お問い合わせ
   label_open311_settings_customfields: Service Request Custom Fields
