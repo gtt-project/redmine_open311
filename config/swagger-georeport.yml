@@ -1,0 +1,371 @@
+swagger: '2.0'
+
+info:
+  version: "2.0"
+  title: MCR GeoReport API
+  description: MyCityReport - 次世代型市民協働プラットフォーム
+  termsOfService: https://www.mycityreport.jp/terms/
+  contact:
+    name: MyCityReport Project
+    url: https://www.mycityreport.jp/
+    email:  info@mycityreport.jp
+  license:
+    name: CC BY 3.0
+    url: http://creativecommons.org/licenses/by/3.0/
+
+host: example.mycityreport.jp
+basePath: /projects/{project_id}/georeport/v2/
+schemes:
+  - https
+
+consumes:
+  - application/x-www-form-urlencoded
+produces:
+  - application/json
+  - text/xml
+
+securityDefinitions:
+  api_key:
+    type: apiKey
+    name: api_key
+    in: query
+
+definitions:
+  Service:
+    description: A single service (type) offered via Open311
+    required:
+      - service_code
+      - service_name
+      - type
+    properties:
+      service_code:
+        type: string
+        format: uid
+        description: unique identifier for the service request type
+      service_name:
+        type: string
+        description: human readable name of the service request type
+      description:
+        type: string
+      metadata:
+        type: boolean
+        description: Are there additional form fields for this service type? If true use GET service definition for that one
+      type:
+        type: string
+        description: Possible values realtime #, batch, blackbox
+        enum:
+          - realtime
+          # - batch
+          # - blackbox
+      keywords:
+        type: array
+        items:
+          type: string
+        description: list of keywords or tags seperated by comma
+      group:
+        type: string
+        description: Category or group to cluster different request types e.g. “sanitation”
+
+  Request:
+   description: Issues that have been reported as service requests. Location is submitted via lat/long or address or address_id
+   required:
+    - service_request_id
+    - status
+    - service_code
+    - requested_datetime
+   properties:
+    service_request_id:
+      type: string
+      format: uid
+      description: Unique ID of the service request created.
+    status:
+      type: string
+      enum:
+        - open
+        - closed
+      description: Current status of the service request.
+    status_notes:
+      type: string
+      description: Explanation of why status was changed to current state or more details on current status than conveyed with status alone.
+    service_name:
+      type: string
+      description: The human readable name of the service request type.
+    service_code:
+      type: string
+      format: uid
+      description: The unique identifier for the service request type
+    description:
+      type: string
+      description: A full description of the request or report submitted.
+    agency_responsible:
+      type: string
+      description: Agency responsible for fulfilling or otherwise addressing the service request.
+    service_notice:
+      type: string
+      description: Information about the action expected to fulfill the request or otherwise address the information reported.
+    requested_datetime:
+      type: string
+      format: date-time
+      description: Date and time when the service request was made.
+    updated_datetime:
+      type: string
+      format: date-time
+      description: Date and time when the service request was last modified. For requests with status=closed, this will be the date the request was closed.
+    expected_datetime:
+      type: string
+      format: date-time
+      description: The date and time when the service request can be expected to be fulfilled. This may be based on a service-specific service level agreement.
+    address:
+      type: string
+      description: Human readable address or description of location. This should be provided from most specific to most general geographic unit, eg address number or cross streets, street name, neighborhood/district, city/town/village, county, postal code.
+    address_id:
+      type: string
+      description: Internal address ID used by a jurisdictions master address repository or other addressing system.
+    zipcode:
+      type: string
+      description: postal code for the location of the service request. (Redundant and field might be removed as it should be part of adress string)
+    lat:
+      type: number
+      format: double
+      description: latitude using the (WGS84) projection.
+    long:
+      type: number
+      format: double
+      description: longitude using the (WGS84) projection.
+    media_url:
+      type: string
+      format: uri
+      description: URL to media associated with the request, eg an image. A convention for parsing media from this URL has yet to be established, so currently it will be done on a case by case basis much like Twitter.com does. For example, if a jurisdiction accepts photos submitted via Twitpic.com, then clients can parse the page at the Twitpic URL for the image given the conventions of Twitpic.com. This could also be a URL to a media RSS feed where the clients can parse for media in a more structured way.
+
+  RequestResponse:
+    description: Details for tracking an created service request
+    properties:
+      service_request_id:
+        type: string
+        format: uid
+        description: Unique ID of the service request created.
+      token:
+        type: string
+        format: uid
+        description: Use this to call GET service_request_id from a token.
+      service_notice:
+        type: string
+        description: Information about the action expected to fulfill the request or otherwise address the information reported.
+      account_id:
+        type: string
+        format: uid
+        description: Unique ID for the user account of the person submitting the request.
+
+parameters:
+  jurisdiction_id:
+    name: jurisdiction_id
+    in: query
+    description: <?>
+    required: true
+    type: string
+    format: uid
+  project_id:
+    name: project_id
+    in: path
+    required: true
+    type: string
+    format: uid
+  response_format:
+    name: response_format
+    in: path
+    required: true
+    type: string
+    format: uid
+
+paths:
+  /requests.{response_format}:
+    get:
+      summary: requests
+      description: Query the current status of multiple requests.
+      parameters:
+        - $ref: '#/parameters/project_id'
+        - $ref: '#/parameters/response_format'
+        # - $ref: '#/parameters/jurisdiction_id'
+        - name: service_request_id
+          in: query
+          description: To call multiple Service Requests at once, multiple service_request_id can be declared; comma delimited. This overrides all other arguments.
+          required: false
+          type: string
+          format: uid
+        - name: service_code
+          in: query
+          description: Specify the service type by calling the unique ID of the service_code.
+          required: false
+          type: string
+        - name: start_date
+          in: query
+          description: Earliest datetime to include in search. When provided with end_date, allows one to search for requests which have a requested_datetime that matches a given range, but may not span more than 90 days.
+          required: false
+          type: string
+          format: date-time
+        - name: end_date
+          in: query
+          description: Latest datetime to include in search. When provided with start_date, allows one to search for requests which have a requested_datetime that matches a given range, but may not span more than 90 days.
+          required: false
+          type: string
+          format: date-time
+        - name: status
+          in: query
+          description: Allows one to search for requests which have a specific status. This defaults to all statuses; can be declared multiple times, comma delimited.
+          required: false
+          type: string
+          enum:
+            - open
+            - closed
+      responses:
+        200:
+          description: List of matching requests (Default query limit is a span of 90 days or first 1000 requests returned, whichever is smallest).
+          schema:
+            type: array
+            items:
+             $ref: '#/definitions/Request'
+          examples:
+            application/xml:
+              request:
+                service_request_id: 638344
+                status: closed
+                status_notes: Duplicate request.
+                service_name: Sidewalk and Curb Issues
+                service_code: 006
+                description:
+                agency_responsible:
+                service_notice:
+                requested_datetime: 2010-04-14T06:37:38-08:00
+                updated_datetime: 2010-04-14T06:37:38-08:00
+                expected_datetime: 2010-04-15T06:37:38-08:00
+                address: 8TH AVE and JUDAH ST
+                address_id: 545483
+                zipcode: 94122
+                lat: 37.762221815
+                long: -122.4651145
+                media_url: http://city.gov.s3.amazonaws.com/requests/media/638344.jpg
+
+    post:
+      summary: Create service request
+      description: Submit a new request for with specific details of a single service. Must provide a location via lat/long or address_string or address_id
+      security:
+        - api_key: []
+      parameters:
+        - $ref: '#/parameters/project_id'
+        - $ref: '#/parameters/response_format'
+        # - $ref: '#/parameters/jurisdiction_id'
+        - name: service_code
+          in: query
+          description: <?>
+          required: true
+          type: string
+          format: uid
+        - name: lat
+          in: query
+          description: WGS-84 latitude
+          required: false
+          type: number
+          format: double
+        - name: long
+          in: query
+          description: WGS-84 longitude
+          required: false
+          type: number
+          format: double
+        - name: address_string
+          in: query
+          required: false
+          type: string
+        - name: address_id
+          in: query
+          required: false
+          type: string
+          format: uid
+        - name: attribute
+          in: query
+          description: array of key/value responses based on Service Definitions.
+          required: false
+          type: array
+          items:
+            type: string
+          collectionFormat: multi
+      responses:
+        200:
+          description: success returns an tracking-id
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/RequestResponse"
+          examples:
+            application/xml:
+              service_requests:
+                service_request_id: 293944
+                service_notice: The City will inspect and require the responsible party to correct within 24 hours and/or issue a Correction Notice or Notice of Violation of the Public Works Code
+                account_id:
+
+  /requests/{service_request_id}.{response_format}:
+    get:
+      summary: current status
+      description: Query the current status of an individual request
+      parameters:
+        - $ref: '#/parameters/project_id'
+        - $ref: '#/parameters/response_format'
+        # - $ref: '#/parameters/jurisdiction_id'
+        - name: service_request_id
+          in: path
+          description: Is specified in the main URL path rather than an added query string parameter.
+          required: true
+          type: string
+          format: uid
+      responses:
+        200:
+          description: success returns request details
+          schema:
+              $ref: "#/definitions/Request"
+          examples:
+            application/xml:
+              request:
+                service_request_id: 638344
+                status: closed
+                status_notes: Duplicate request.
+                service_name: Sidewalk and Curb Issues
+                service_code: 006
+                description:
+                agency_responsible:
+                service_notice:
+                requested_datetime: 2010-04-14T06:37:38-08:00
+                updated_datetime: 2010-04-14T06:37:38-08:00
+                expected_datetime: 2010-04-15T06:37:38-08:00
+                address: 8TH AVE and JUDAH ST
+                address_id: 545483
+                zipcode: 94122
+                lat: 37.762221815
+                long: -122.4651145
+                media_url: http://city.gov.s3.amazonaws.com/requests/media/638344.jpg
+
+  /services.{response_format}:
+    get:
+      summary: service types
+      description: List acceptable service request types and their associated service codes. These request types can be unique to the city/jurisdiction.
+      parameters:
+        - $ref: '#/parameters/project_id'
+        - $ref: '#/parameters/response_format'
+        # - $ref: '#/parameters/jurisdiction_id'
+      responses:
+        200:
+          description: ok
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Service'
+          examples:
+            application/xml:
+              services:
+                service:
+                  service_code: 001
+                  service_name: Cans left out 24x7
+                  description: Garbage or recycling cans that have been left out for more than 24 hours after collection. Violators will be cited.
+                  metadata: true
+                  type: realtime
+                  keywords: lorem, ipsum, dolor
+                  group: sanitation

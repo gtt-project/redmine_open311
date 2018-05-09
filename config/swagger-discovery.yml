@@ -1,0 +1,106 @@
+swagger: '2.0'
+
+info:
+  version: "2.0"
+  title: MCR Service Discovery API
+  description: MyCityReport - 次世代型市民協働プラットフォーム
+  termsOfService: https://www.mycityreport.jp/terms/
+  contact:
+    name: MyCityReport Project
+    url: https://www.mycityreport.jp/
+    email:  info@mycityreport.jp
+  license:
+    name: CC BY 3.0
+    url: http://creativecommons.org/licenses/by/3.0/
+
+host: example.mycityreport.jp
+basePath: /georeport/v2/
+schemes:
+  - https
+
+consumes:
+  - application/x-www-form-urlencoded
+produces:
+  - application/json
+  - text/html
+  - text/xml
+
+definitions:
+  Service:
+    description: A discovery service response
+    required:
+      - changeset
+      - contact
+      - key_service
+      - endpoints
+    properties:
+      changeset:
+        type: string
+      contact:
+        type: string
+      key_service:
+        type: string
+      endpoints:
+        type: array
+        items:
+          $ref: '#/definitions/Endpoint'
+
+  Endpoint:
+    description: A single service endpoint
+    required:
+      - specification
+      - url
+      - changeset
+      - type
+      - formats
+    properties:
+      specification:
+        type: string
+      url:
+        type: string
+      changeset:
+        type: string
+      type:
+        type: string
+      formats:
+        type: array
+        items:
+          $ref: '#/definitions/Format'
+
+  Format:
+    description: A service endpoint format
+    required:
+      - format
+    properties:
+      metadata:
+        type: string
+        description: Supported MIME type for this endpoint.
+
+parameters:
+  response_format:
+    name: response_format
+    in: path
+    required: true
+    type: string
+    format: uid
+
+paths:
+  /discovery.{response_format}:
+    get:
+      summary: Service Discovery
+      description: >
+        The service discovery mechanism is intended serve several functions:<br><ol>
+        <li>Establish a single universal URL for a jurisdiction that can route to various different API endpoints including multiple versions of the Open311 APIs and multiple levels of API stability (eg. production and testing)</li>
+        <li>Provide an aggregated look-up to flag whether there have been any significant changes to the data held within each API. This is done with the changeset field and can imply different things for different APIs. In the case of the Open311 GeoReport v2 specification, an updated changeset indicates that there has been an update to the Service Discovery list or to the Service Definitions. This is basically a flag to indicated whether clients should refresh frequently cached data.</li>
+        <li>Provide key meta data about each API endpoint including the output formats supported (eg. whether JSON is supported).</li>
+        <li>Establish a single universal URL for information about API services such as getting an API key, contacting the API maintainers, and checking on the status of the API (eg under maintenance)</li>
+        </ol>
+      parameters:
+        - $ref: '#/parameters/response_format'
+      responses:
+        200:
+          description: ok
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/Service'
