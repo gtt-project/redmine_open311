@@ -1,19 +1,40 @@
-Redmine Open311 Plugin
-======================
+# Redmine GeoReport Plugin
+
+This plugin adds Open311 API endpoints to Redmine
 
 
-Installation
-------------
+## Requirements
 
-Follow standard Redmine plugin installation procedure. This plugin depends on
-the `redmine_gtt` plugin which you should install first.
+ - Redmine >= 3.4.0
+ - [Redmine GTT](https://github.com/bizyman/gtt) plugin
+
+## Installation
+
+To install Redmine georeport plugin, download or clone this repository in your Redmine installation plugins directory! 
+
+`git clone https://hub.georepublic.net/gtt/redmine_open311.git`
+
+Then run
+
+`bundle install`
+
+followed by
+
+`bundle exec rake redmine:plugins:migrate`
 
 
-License
--------
+After restarting Redmine, you should be able to see the Redmine Resource Manager in the Plugins page.
 
-GPL v3, see the LICENSE file.
+More information on installing Redmine plugins can be found here: http://www.redmine.org/wiki/redmine/Plugins
 
-Created for [Georepublic](https://georepublic.info) by [Jens
-Kraemer](https://jkraemer.net).
 
+## Authors
+
+  - [Jens Kraemer](https://github.com/jkraemer)
+
+  - [Daniel Kastl](https://github.com/dkastl)
+
+
+## LICENSE
+
+GPL v3.0
