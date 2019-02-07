@@ -26,7 +26,7 @@ class ServiceDiscoveryTest < Redmine::IntegrationTest
   end
 
   test 'should should filter projects by geometry' do
-    get '/georeport/v2/discovery.xml', contains: 'POINT(123.271 9.35)'
+    get '/georeport/v2/discovery.xml', params: {contains: 'POINT(123.271 9.35)'}
     assert_response :success
     xml = xml_data
     assert endpoints = xml.xpath('/discovery/endpoints/endpoint')
@@ -42,13 +42,13 @@ class ServiceDiscoveryTest < Redmine::IntegrationTest
       }
     }.to_json
 
-    get '/georeport/v2/discovery.xml', contains: 'POINT(123.271 9.55)'
+    get '/georeport/v2/discovery.xml', params: {contains: 'POINT(123.271 9.55)'}
     assert_response :success
     xml = xml_data
     assert endpoints = xml.xpath('/discovery/endpoints/endpoint')
     assert_equal 0, endpoints.size
 
-    get '/georeport/v2/discovery.xml', contains: 'POINT(123.271 9.35)'
+    get '/georeport/v2/discovery.xml', params: {contains: 'POINT(123.271 9.35)'}
     assert_response :success
     xml = xml_data
     assert endpoints = xml.xpath('/discovery/endpoints/endpoint')
