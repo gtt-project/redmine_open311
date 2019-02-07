@@ -1,7 +1,7 @@
 class Open311SettingsController < ApplicationController
 
-  before_filter :find_project_by_project_id
-  before_filter :authorize
+  before_action :find_project_by_project_id
+  before_action :authorize
 
   def update
     settings = Setting.plugin_redmine_open311
