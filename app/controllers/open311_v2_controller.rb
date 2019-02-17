@@ -1,6 +1,6 @@
 class Open311V2Controller < ApplicationController
 
-  before_filter :find_optional_project_and_authorize
+  before_action :find_optional_project_and_authorize
   accept_api_auth
 
   def discovery

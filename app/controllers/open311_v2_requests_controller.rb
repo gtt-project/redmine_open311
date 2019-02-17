@@ -2,8 +2,8 @@ class Open311V2RequestsController < ApplicationController
 
   accept_api_auth
 
-  before_filter :find_project_by_project_id
-  before_filter :authorize
+  before_action :find_project_by_project_id
+  before_action :authorize
 
   def index
     @requests = RedmineOpen311::ServiceRequestQuery.new(
