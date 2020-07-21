@@ -28,19 +28,19 @@ class ServiceRequestsTest < Redmine::IntegrationTest
   test 'index should require api permission' do
     Role.anonymous.remove_permission! :access_open311_api
     get '/projects/ecookbook/georeport/v2/requests.xml'
-    assert_response 401
+    assert_response 403
   end
 
   test 'index should require issues permission' do
     Role.anonymous.remove_permission! :view_issues
     get '/projects/ecookbook/georeport/v2/requests.xml'
-    assert_response 401
+    assert_response 403
   end
 
   test 'create should require add issues permission' do
     Role.anonymous.remove_permission! :add_issues
     post '/projects/ecookbook/georeport/v2/requests.xml'
-    assert_response 401
+    assert_response 403
   end
 
   test 'should get service request' do

@@ -15,7 +15,7 @@ class ServiceDiscoveryTest < Redmine::IntegrationTest
   test 'should require permission' do
     Role.anonymous.remove_permission! :access_open311_api
     get '/georeport/v2/discovery.xml'
-    assert_response 401
+    assert_response 403
   end
 
   test 'should get service discovery html' do
