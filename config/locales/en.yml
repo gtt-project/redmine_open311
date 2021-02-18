@@ -9,6 +9,12 @@ en:
   label_open311_lastname_field: Lastname
   label_open311_account_id_field: Account ID
 
+  label_open311_zipcode_field: ZIP Code
+  label_open311_phone_field: Phone
+  label_open311_last_name_field: Lastname
+  label_open311_first_name_field: Firstname
+  label_open311_address_string_field: Address
+
   label_open311_settings: Service Discovery Settings
   label_open311_settings_contact: Contact
   label_open311_settings_customfields: Service Request Custom Fields

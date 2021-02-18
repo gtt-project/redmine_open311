@@ -28,19 +28,19 @@ class ServiceRequestsTest < Redmine::IntegrationTest
   test 'index should require api permission' do
     Role.anonymous.remove_permission! :access_open311_api
     get '/projects/ecookbook/georeport/v2/requests.xml'
-    assert_response 401
+    assert_response 403
   end
 
   test 'index should require issues permission' do
     Role.anonymous.remove_permission! :view_issues
     get '/projects/ecookbook/georeport/v2/requests.xml'
-    assert_response 401
+    assert_response 403
   end
 
   test 'create should require add issues permission' do
     Role.anonymous.remove_permission! :add_issues
     post '/projects/ecookbook/georeport/v2/requests.xml'
-    assert_response 401
+    assert_response 403
   end
 
   test 'should get service request' do
@@ -56,22 +56,22 @@ class ServiceRequestsTest < Redmine::IntegrationTest
   test 'should filter project requests' do
     r1 = create_request.issue
     r2 = create_request.issue
-    get '/projects/ecookbook/georeport/v2/requests.xml', { status: 'closed' }
+    get '/projects/ecookbook/georeport/v2/requests.xml', params: { status: 'closed' }
     assert_response :success
     xml = xml_data
     assert_equal 0, xml.xpath('/service_requests/request').size
 
-    get '/projects/ecookbook/georeport/v2/requests.xml', { status: 'open,closed' }
+    get '/projects/ecookbook/georeport/v2/requests.xml', params: { status: 'open,closed' }
     assert_response :success
     xml = xml_data
     assert_equal 2, xml.xpath('/service_requests/request').size
 
-    get '/projects/ecookbook/georeport/v2/requests.xml', { status: 'open' }
+    get '/projects/ecookbook/georeport/v2/requests.xml', params: { status: 'open' }
     assert_response :success
     xml = xml_data
     assert_equal 2, xml.xpath('/service_requests/request').size
 
-    get '/projects/ecookbook/georeport/v2/requests.xml', { service_request_id: r2.id }
+    get '/projects/ecookbook/georeport/v2/requests.xml', params: { service_request_id: r2.id }
     assert_response :success
     xml = xml_data
     assert_equal 1, xml.xpath('/service_requests/request').size
@@ -104,7 +104,7 @@ class ServiceRequestsTest < Redmine::IntegrationTest
   end
 
   test 'should render error for wrong service_code' do
-    post '/projects/ecookbook/georeport/v2/requests.json', {
+    post '/projects/ecookbook/georeport/v2/requests.json', params: {
       service_code: 19,
       lat: 123.271, lon: 9.35,
       description: 'some text'
@@ -116,7 +116,7 @@ class ServiceRequestsTest < Redmine::IntegrationTest
   end
 
   test 'should create request' do
-    post '/projects/ecookbook/georeport/v2/requests.json', {
+    post '/projects/ecookbook/georeport/v2/requests.json', params: {
       service_code: 1,
       lat: 123.271, lon: 9.35,
       description: 'some text',

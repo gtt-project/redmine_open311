@@ -1,40 +1,55 @@
-# Redmine GeoReport Plugin
+# Redmine Open311 Plugin
 
-This plugin adds Open311 API endpoints to Redmine
+![CI #develop](https://github.com/gtt-project/redmine_open311/workflows/Test%20with%20Redmine/badge.svg)
 
+This plugin adds [Open311](https://www.open311.org/) Georeport API endpoints to Redmine.
 
 ## Requirements
 
- - Redmine >= 3.4.0
- - [Redmine GTT](https://github.com/bizyman/gtt) plugin
+This plugin **requires PostgreSQL/PostGIS** and depends on the [`redmine_gtt` Plugin](https://github.com/gtt-project/redmine_gtt)!!!
+
+- Redmine >= 3.4.0
+- PostgreSQL >= 9.6
+- PostGIS >= 2.4
 
 ## Installation
 
-To install Redmine georeport plugin, download or clone this repository in your Redmine installation plugins directory! 
-
-`git clone https://hub.georepublic.net/gtt/redmine_open311.git`
+To install Redmine Open311 plugin, download or clone this repository in your Redmine installation plugins directory!
+```
+cd path/to/plugin/directory
+git clone https://github.com/gtt-project/redmine_open311.git
+```
 
 Then run
 
-`bundle install`
+```
+bundle install
+bundle exec rake redmine:plugins:migrate
+```
 
-followed by
+After restarting Redmine, you should be able to see the Redmine Open311 plugin in the Plugins page.
 
-`bundle exec rake redmine:plugins:migrate`
+More information on installing (and uninstalling) Redmine plugins can be found here: https://www.redmine.org/wiki/redmine/Plugins
 
+## How to use
 
-After restarting Redmine, you should be able to see the Redmine Resource Manager in the Plugins page.
+[Settings, screenshots, etc.]
 
-More information on installing Redmine plugins can be found here: http://www.redmine.org/wiki/redmine/Plugins
+## Contributing and Support
 
+The GTT Project appreciates any [contributions](https://github.com/gtt-project/.github/blob/main/CONTRIBUTING.md)! Feel free to contact us for [reporting problems and support](https://github.com/gtt-project/.github/blob/main/CONTRIBUTING.md).
+
+## Version History
+
+See [all releases](https://github.com/gtt-project/redmine_open311/releases) with release notes.
 
 ## Authors
 
   - [Jens Kraemer](https://github.com/jkraemer)
-
   - [Daniel Kastl](https://github.com/dkastl)
-
+  - [Thibault Mutabazi](https://github.com/eyewritecode)
+  - ... [and others](https://github.com/gtt-project/redmine_open311/graphs/contributors)
 
 ## LICENSE
 
-GPL v3.0
+This program is free software. See [LICENSE](LICENSE) for more information.
