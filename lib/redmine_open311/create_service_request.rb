@@ -25,8 +25,8 @@ module RedmineOpen311
 
     end
 
-    def self.call(*_)
-      new(*_).call
+    def self.call(*_, **__)
+      new(*_, **__).call
     end
 
     private
