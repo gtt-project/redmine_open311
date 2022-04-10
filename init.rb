@@ -1,7 +1,11 @@
-require 'redmine'
-
-Rails.configuration.to_prepare do
-  RedmineOpen311.setup
+if Rails.version > '6.0' && Rails.autoloaders.zeitwerk_enabled?
+  Rails.application.config.after_initialize do
+    RedmineOpen311.setup
+  end
+else
+  Rails.configuration.to_prepare do
+    RedmineOpen311.setup
+  end
 end
 
 Redmine::Plugin.register :redmine_open311 do
