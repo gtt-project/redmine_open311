@@ -14,9 +14,9 @@ Redmine::Plugin.register :redmine_open311 do
   author_url 'https://github.com/georepublic'
   url 'https://github.com/gtt-project/redmine_open311'
   description 'Adds Open311 API endpoints to Redmine'
-  version '1.2.0'
+  version '2.0.0'
 
-  requires_redmine version_or_higher: '3.4.0'
+  requires_redmine version_or_higher: '4.2.0'
 
   settings default: {
     'contact' => '',
