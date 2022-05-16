@@ -18,9 +18,9 @@ class ServiceRequest
   class JurisdictionValidator < ActiveModel::Validator
     def validate(record)
       if record.jurisdiction_project.nil?
-        record.errors[:jurisdiction_id] << :invalid
+        record.errors.add :jurisdiction_id, :invalid
       elsif record.tracker.nil?
-        record.errors[:service_code] << :invalid
+        record.errors.add :service_code, :invalid
       end
     end
   end

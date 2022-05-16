@@ -8,9 +8,9 @@ This plugin adds [Open311](https://www.open311.org/) Georeport API endpoints to 
 
 This plugin **requires PostgreSQL/PostGIS** and depends on the [`redmine_gtt` Plugin](https://github.com/gtt-project/redmine_gtt)!!!
 
-- Redmine >= 3.4.0
-- PostgreSQL >= 9.6
-- PostGIS >= 2.4
+- Redmine >= 4.2.0
+- PostgreSQL >= 10
+- PostGIS >= 2.5
 
 ## Installation
 
@@ -41,6 +41,9 @@ The GTT Project appreciates any [contributions](https://github.com/gtt-project/.
 
 ## Version History
 
+- 2.0.0 Support Redmine >= 5.0 and drop Redmine <= 4.1 support
+- 1.2.0 Publish on GitHub
+
 See [all releases](https://github.com/gtt-project/redmine_open311/releases) with release notes.
 
 ## Authors
@@ -48,6 +51,7 @@ See [all releases](https://github.com/gtt-project/redmine_open311/releases) with
   - [Jens Kraemer](https://github.com/jkraemer)
   - [Daniel Kastl](https://github.com/dkastl)
   - [Thibault Mutabazi](https://github.com/eyewritecode)
+  - [Ko Nagase](https://github.com/sanak)
   - ... [and others](https://github.com/gtt-project/redmine_open311/graphs/contributors)
 
 ## LICENSE

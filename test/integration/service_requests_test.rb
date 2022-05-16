@@ -112,7 +112,7 @@ class ServiceRequestsTest < Redmine::IntegrationTest
     assert_response :not_found
     assert error = json_data['errors'].first
     assert_equal 404, error['code']
-    assert_equal 'Service code invalid', error['description']
+    assert_equal 'Service code is invalid', error['description']
   end
 
   test 'should create request' do
